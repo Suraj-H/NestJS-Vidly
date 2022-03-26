@@ -1,0 +1,40 @@
+GET http://localhost:3000/users
+
+### find user by ID
+GET http://localhost:3000/users/1
+
+### find user by query
+GET http://localhost:3000/users
+
+### signup user
+POST http://localhost:3000/users/signup
+Content-Type: application/json
+
+{
+  "username": "doombreaker",
+  "email": "doombreaker@gmail.com",
+  "password": "doombreaker"
+}
+
+### signin user
+POST http://localhost:3000/users/signin
+Content-Type: application/json
+
+{
+  "email": "doombreaker@gmail.com",
+  "password": "doombreaker"
+}
+
+### signout user
+POST http://localhost:3000/users/signout
+
+### update user
+PATCH  http://localhost:3000/users/2
+Content-Type: application/json
+
+{
+  "isAdmin": "true"
+}
+
+### delete user by ID
+DELETE http://localhost:3000/users/1

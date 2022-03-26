@@ -1,0 +1,29 @@
+### get all customers
+GET http://localhost:3000/customers
+
+### get customers by query
+GET http://localhost:3000/customers?limit=1
+
+### get a customer by ID
+GET http://localhost:3000/customers/3
+
+### create a customer
+POST http://localhost:3000/customers
+Content-Type: application/json
+
+{
+  "name": "Rui Chikawa",
+  "phone": "9875444797"
+}
+
+### update customer
+PATCH http://localhost:3000/customers/2
+Content-Type: application/json
+
+{
+  "name": "Rui Chikawa",
+  "phone": "8875444797"
+}
+
+### remove customer
+DELETE http://localhost:3000/customers/2

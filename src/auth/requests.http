@@ -1,0 +1,7 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "name": "jintan",
+  "password": "$2b$10$I7zoZl3QCa2KLcsHuN7er.X20agrpzzC.ly0./zq6zGDT6YTEEuFe"
+}

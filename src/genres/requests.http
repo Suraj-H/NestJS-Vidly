@@ -1,0 +1,27 @@
+### create a genre
+POST http://localhost:3000/genres
+Content-Type: application/json
+
+{
+  "name": "Drama"
+}
+
+### get genres list
+GET http://localhost:3000/genres
+
+### get genres by query
+GET http://localhost:3000/genres?limit=2
+
+### get a genre by Id
+GET http://localhost:3000/genres/2
+
+### update a genre
+PATCH http://localhost:3000/genres/4
+Content-Type: application/json
+
+{
+  "name": "Fantasy"
+}
+
+### remove a genre
+DELETE http://localhost:3000/genres/45

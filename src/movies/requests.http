@@ -1,0 +1,30 @@
+### get movies list
+GET http://localhost:3000/movies
+
+### get movies by query
+GET http://localhost:3000/movies?limit=1
+
+### get a movie by Id
+GET http://localhost:3000/movies/2
+
+### create a movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Hunter x Hunter (2011)",
+  "genres": ["Action","Fantasy", "Adventure"],
+  "numberInStock": 35,
+  "dailyRentalRate": 350
+}
+
+### update a movie
+PATCH http://localhost:3000/movies/2
+Content-Type: application/json
+
+{
+  "numberInStock": 45
+}
+
+### remove a movie
+DELETE http://localhost:3000/movies/2

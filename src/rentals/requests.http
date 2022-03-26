@@ -1,0 +1,29 @@
+### find all rentals
+GET http://localhost:3000/rentals
+
+### find all rentals by query
+GET http://localhost:3000/rentals?limit=2
+
+### find a rental by ID
+GET http://localhost:3000/rentals/3
+
+### create rental
+POST http://localhost:3000/rentals
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "movieId": 3
+}
+
+### update rental
+PATCH http://localhost:3000/rentals/3
+Content-Type: application/json
+
+{
+  "movieId": 5,
+  "rentalFee": 450
+}
+
+### remove rental
+DELETE http://localhost:3000/rentals/5
