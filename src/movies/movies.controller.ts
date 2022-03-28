@@ -36,7 +36,8 @@ export class MoviesController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Movie> {
-    return this.moviesService.findOne(+id);
+    //return this.moviesService.findOne(+id);
+    return this.moviesService.getMovie(+id);
   }
 
   @Post()

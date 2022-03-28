@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/dtos/pagination-query.dto';
 import { Genre } from 'src/genres/genre.entity';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { CreateMovieDto } from './dtos/create-movie.dto';
 import { UpdateMovieDto } from './dtos/update-movie.dto';
 import { Movie } from './movie.entity';
@@ -86,5 +86,20 @@ export class MoviesService {
     const existingGenre = await this.genresRepository.findOne({ name });
     if (existingGenre) return existingGenre;
     return this.genresRepository.create({ name });
+  }
+
+  getMovie(id: number) {
+    return this.getMovieBaseQuery()
+      .andWhere('movie.id = :id', { id })
+      .loadRelationIdAndMap('movie.genres', 'movie.genres', 'genre', (qb) =>
+        qb.select('genre.name'),
+      )
+      .getOne();
+  }
+
+  private getMovieBaseQuery(): SelectQueryBuilder<Movie> {
+    return this.movieRepository
+      .createQueryBuilder('movie')
+      .orderBy('movie.id', 'ASC');
   }
 }

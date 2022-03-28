@@ -1,11 +1,3 @@
-import {
-  IsNumber,
-  IsString,
-  Max,
-  MaxLength,
-  Min,
-  MinLength,
-} from 'class-validator';
 import { Genre } from 'src/genres/genre.entity';
 import { Rental } from 'src/rentals/rental.entity';
 import {
@@ -26,7 +18,7 @@ export class Movie {
   title: string;
 
   @JoinTable()
-  @ManyToMany((type) => Genre, (genre) => genre.movies, {
+  @ManyToMany(() => Genre, (genre) => genre.movies, {
     cascade: true,
   })
   genres: Genre[];
