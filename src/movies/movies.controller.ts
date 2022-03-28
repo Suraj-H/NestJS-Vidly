@@ -10,10 +10,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { PaginationQueryDto } from 'src/dtos/pagination-query.dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateMovieDto } from './dtos/create-movie.dto';
 import { UpdateMovieDto } from './dtos/update-movie.dto';
 import { Movie } from './movie.entity';
 import { MoviesService } from './movies.service';
+import { MovieType } from './types/movie.type';
 
 @Controller('movies')
 export class MoviesController {
@@ -35,9 +37,9 @@ export class MoviesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Movie> {
-    //return this.moviesService.findOne(+id);
-    return this.moviesService.getMovie(+id);
+  async findOne(@Param('id') id: string): Promise<MovieType> {
+    const movie = await this.moviesService.findOne(+id);
+    return this.moviesService.getMovieResponse(movie);
   }
 
   @Post()

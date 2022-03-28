@@ -10,6 +10,7 @@ import { Repository, SelectQueryBuilder } from 'typeorm';
 import { CreateMovieDto } from './dtos/create-movie.dto';
 import { UpdateMovieDto } from './dtos/update-movie.dto';
 import { Movie } from './movie.entity';
+import { MovieType } from './types/movie.type';
 
 @Injectable()
 export class MoviesService {
@@ -88,18 +89,16 @@ export class MoviesService {
     return this.genresRepository.create({ name });
   }
 
-  getMovie(id: number) {
-    return this.getMovieBaseQuery()
-      .andWhere('movie.id = :id', { id })
-      .loadRelationIdAndMap('movie.genres', 'movie.genres', 'genre', (qb) =>
-        qb.select('genre.name'),
-      )
-      .getOne();
-  }
-
   private getMovieBaseQuery(): SelectQueryBuilder<Movie> {
     return this.movieRepository
       .createQueryBuilder('movie')
       .orderBy('movie.id', 'ASC');
+  }
+
+  async getMovieResponse(movie: Movie): Promise<MovieType> {
+    let genreArrays = movie.genres;
+    let genres = genreArrays.map((genre: Genre) => genre.name);
+    delete movie.genres;
+    return { ...movie, genres };
   }
 }
