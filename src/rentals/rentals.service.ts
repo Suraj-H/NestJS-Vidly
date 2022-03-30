@@ -9,7 +9,7 @@ import { Customer } from 'src/customers/customer.entity';
 import { PaginationQueryDto } from 'src/dtos/pagination-query.dto';
 import { Movie } from 'src/movies/movie.entity';
 import { MoviesService } from 'src/movies/movies.service';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { CreateRentalDto } from './dtos/create-rental.dto';
 import { UpdateRentalDto } from './dtos/update-rental.dto';
 import { Rental } from './rental.entity';
@@ -24,6 +24,7 @@ export class RentalsService {
     @InjectRepository(Movie)
     private readonly movieRepository: Repository<Movie>,
     private readonly moviesService: MoviesService,
+    private readonly connection: Connection,
   ) {}
 
   async findAll(paginationQueryDto: PaginationQueryDto): Promise<Rental[]> {
@@ -49,6 +50,7 @@ export class RentalsService {
 
   async create(createRentalDto: CreateRentalDto): Promise<Rental> {
     const { customerId, movieId } = createRentalDto;
+    const queryRunner = this.connection.createQueryRunner();
 
     const customer = await this.customerRepository.findOne(customerId);
     if (!customer) throw new BadRequestException('invalid customer.');
@@ -56,17 +58,29 @@ export class RentalsService {
     const movie = await this.movieRepository.findOne(movieId);
     if (!movie) throw new BadRequestException('invalid movie.');
 
-    --movie.numberInStock;
-
     let rental = this.rentalRepository.create({
       customer: customer,
       movie: movie,
       rentalFee: movie.dailyRentalRate,
     });
 
-    this.moviesService.update(movie.id, { numberInStock: movie.numberInStock });
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      --movie.numberInStock;
 
-    return this.rentalRepository.save(rental);
+      await queryRunner.manager.update(Movie, movie.id, {
+        numberInStock: movie.numberInStock,
+      });
+
+      rental = await queryRunner.manager.save(Rental, rental);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
+
+    return rental;
   }
 
   async update(id: number, updateRentalDto: UpdateRentalDto): Promise<Rental> {
