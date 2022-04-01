@@ -5,9 +5,9 @@ import { CreateRentalDto } from './create-rental.dto';
 export class UpdateRentalDto extends PartialType(CreateRentalDto) {
   @IsDate()
   @IsOptional()
-  dateReturened: Date;
+  readonly dateReturened: Date;
 
   @IsOptional()
   @IsNumber()
-  rentalFee: number;
+  readonly rentalFee: number;
 }

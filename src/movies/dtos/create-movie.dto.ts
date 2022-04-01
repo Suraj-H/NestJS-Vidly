@@ -13,21 +13,21 @@ export class CreateMovieDto {
   @IsNotEmpty()
   @MinLength(5)
   @MaxLength(255)
-  title: string;
+  readonly title: string;
 
   @IsNotEmpty()
   @IsString({ each: true })
-  genres: string[];
+  readonly genres: string[];
 
   @IsNumber()
   @IsNotEmpty()
   @Min(0)
   @Max(2000)
-  numberInStock: number;
+  readonly numberInStock: number;
 
   @IsNumber()
   @IsNotEmpty()
   @Min(0)
   @Max(1000)
-  dailyRentalRate: number;
+  readonly dailyRentalRate: number;
 }

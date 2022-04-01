@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -8,14 +9,15 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PaginationQueryDto } from 'src/dtos/pagination-query.dto';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateMovieDto } from './dtos/create-movie.dto';
+
 import { UpdateMovieDto } from './dtos/update-movie.dto';
+import { MovieInterceptor } from './interceptors/movie.interceptor';
 import { Movie } from './movie.entity';
 import { MoviesService } from './movies.service';
-import { MovieType } from './types/movie.type';
 
 @Controller('movies')
 export class MoviesController {
@@ -36,10 +38,12 @@ export class MoviesController {
     return movies;
   }
 
+  //@UseInterceptors(MovieInterceptor)
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<MovieType> {
+  async findOne(@Param('id') id: string): Promise<Movie> {
     const movie = await this.moviesService.findOne(+id);
-    return this.moviesService.getMovieResponse(movie);
+    return movie;
   }
 
   @Post()

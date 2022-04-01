@@ -12,8 +12,9 @@ POST http://localhost:3000/customers
 Content-Type: application/json
 
 {
-  "name": "Rui Chikawa",
-  "phone": "9875444797"
+  "name": "Akika Shinzahira",
+  "phone": "8269240032",
+  "isGold": false
 }
 
 ### update customer

@@ -23,6 +23,9 @@ const cookieSession = require('cookie-session');
       validationSchema: Joi.object({
         DATABASE_HOST: Joi.required(),
         DATABASE_PORT: Joi.number().default(5432),
+        DATABASE_USERNAME: Joi.string().required(),
+        POSTGRES_PASSWORD: Joi.string().required(),
+        POSTGRES_DB: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRootAsync({

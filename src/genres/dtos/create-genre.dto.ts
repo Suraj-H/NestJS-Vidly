@@ -5,5 +5,5 @@ export class CreateGenreDto {
   @IsNotEmpty()
   @MinLength(5)
   @MaxLength(50)
-  name: string;
+  readonly name: string;
 }

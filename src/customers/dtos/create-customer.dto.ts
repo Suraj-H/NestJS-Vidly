@@ -12,15 +12,15 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   @MinLength(5)
   @MaxLength(50)
-  name: string;
+  readonly name: string;
 
   @IsBoolean()
   @IsOptional()
-  isGold: boolean;
+  readonly isGold: boolean;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
   @MaxLength(50)
-  phone: string;
+  readonly phone: string;
 }

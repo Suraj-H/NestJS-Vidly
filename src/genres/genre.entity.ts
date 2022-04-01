@@ -11,4 +11,13 @@ export class Genre {
 
   @ManyToMany((type) => Movie, (movie) => movie.genres)
   movies: Movie[];
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
 }

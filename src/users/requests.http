@@ -11,25 +11,25 @@ POST http://localhost:3000/users/signup
 Content-Type: application/json
 
 {
-  "username": "doombreaker",
-  "email": "doombreaker@gmail.com",
-  "password": "doombreaker"
+  "username": "FuchisariKamemari",
+  "email": "FuchisariKamemari@hotmail.com",
+  "password": "FuchisariKamemari"
 }
 
 ### signin user
-POST http://localhost:3000/users/signin
+POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "doombreaker@gmail.com",
-  "password": "doombreaker"
+  "email": "FuchisariKamemari@hotmail.com",
+  "password": "FuchisariKamemari"
 }
 
 ### signout user
 POST http://localhost:3000/users/signout
 
 ### update user
-PATCH  http://localhost:3000/users/2
+PATCH  http://localhost:3000/users/9
 Content-Type: application/json
 
 {

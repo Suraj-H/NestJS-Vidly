@@ -17,4 +17,13 @@ export class Customer {
 
   @OneToMany(() => Rental, (rental) => rental.customer)
   rentals: Rental[];
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
 }
